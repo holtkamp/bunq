@@ -7,6 +7,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Link0\Bunq\Domain\Certificate;
+use Link0\Bunq\Domain\CredentialPasswordIp;
 use Link0\Bunq\Domain\DeviceServer;
 use Link0\Bunq\Domain\Id;
 use Link0\Bunq\Domain\Keypair;
@@ -126,6 +127,8 @@ final class Client
     private function mapResponse(string $key, array $value)
     {
         switch ($key) {
+            case 'CredentialPasswordIp':
+                return CredentialPasswordIp::fromArray($value);
             case 'DeviceServer':
                 return DeviceServer::fromArray($value);
             case 'MonetaryAccountBank':
