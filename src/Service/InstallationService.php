@@ -42,13 +42,8 @@ final class InstallationService
         ]);
     }
 
-    /**
-     * @return Id $deviceServerId
-     */
-    public function createDeviceServer($token, string $apiKey, string $description): Id
+    public function createDeviceServer($token, string $apiKey, string $description, array $permittedIps = []): Id
     {
-        $permittedIps = [];
-
         $body = [
             'description' => $description,
             'secret' => $apiKey,
