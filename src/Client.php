@@ -138,7 +138,7 @@ final class Client
             case 'UserCompany':
                 return UserCompany::fromArray($value);
             case 'Id':
-                return Id::fromInteger($value['id']);
+                return Id::fromInteger($value['id'] ?? $value['Id']); //Documentation suggests lower case: "id", response is upper case: "Id", support both
             case 'CertificatePinned':
                 return Certificate::fromArray($value);
             case 'Payment':
