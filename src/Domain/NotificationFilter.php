@@ -78,9 +78,9 @@ final class NotificationFilter
 
     /**
      * @param array $notificationFilterStruct
-     * @return NotificationFilter
+     * @return NotificationFilter|null
      */
-    public static function fromArray(array $notificationFilterStruct): NotificationFilter
+    public static function fromArray(array $notificationFilterStruct): ?NotificationFilter
     {
         // Target is optional (required for callback, not push)
         $notificationTarget = '';
@@ -88,11 +88,18 @@ final class NotificationFilter
             $notificationTarget = $notificationFilterStruct['notification_target'];
         }
 
-        return new self(
-            $notificationFilterStruct['notification_delivery_method'],
-            $notificationTarget,
-            $notificationFilterStruct['category']
-        );
+        try {
+            return new self(
+                $notificationFilterStruct['notification_delivery_method'],
+                $notificationTarget,
+                $notificationFilterStruct['category']
+            );
+        }
+        catch(\Exception $exception){
+            \error_log('caught exception while trying to assemble NotificationFilter: ' . $exception->getMessage());
+            return null;
+        }
+
     }
 
     /**

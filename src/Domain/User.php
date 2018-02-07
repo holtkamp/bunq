@@ -123,9 +123,14 @@ abstract class User
         $this->mainAddress = Address::fromArray($user['address_main']);
         $this->postalAddress = Address::fromArray($user['address_postal']);
 
-        $this->notificationFilters = array_map(function ($notificationFilter) {
-            return NotificationFilter::fromArray($notificationFilter);
-        }, $user['notification_filters']);
+        $this->notificationFilters = array_filter(
+            array_map(
+                function ($notificationFilter): ?NotificationFilter {
+                    return NotificationFilter::fromArray($notificationFilter);
+                },
+                $user['notification_filters']
+            )
+        );
     }
 
     /**
