@@ -42,7 +42,8 @@ final class CertificatePinnedService
     public function add(Certificate $certificate): Id
     {
         return $this->client->post(
-            'user/' . $this->userId . '/certificate-pinned', [
+            'user/' . $this->userId . '/certificate-pinned',
+            [
                 'certificate_chain' => [[
                     'certificate' => (string) $certificate,
                 ]],

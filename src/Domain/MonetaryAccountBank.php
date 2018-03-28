@@ -100,7 +100,7 @@ final class MonetaryAccountBank
         $this->dailySpent = new Money($monetaryBankAccount['daily_spent']['value'] * 100, $this->currency);
 
         foreach ($monetaryBankAccount['notification_filters'] as $notificationFilter) {
-            if($notificationFilter = NotificationFilter::fromArray($notificationFilter)) {
+            if ($notificationFilter = NotificationFilter::fromArray($notificationFilter)) {
                 $this->notificationFilters[] = $notificationFilter;
             }
         }

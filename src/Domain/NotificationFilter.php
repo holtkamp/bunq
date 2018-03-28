@@ -94,12 +94,10 @@ final class NotificationFilter
                 $notificationTarget,
                 $notificationFilterStruct['category']
             );
-        }
-        catch(\Exception $exception){
+        } catch (\Exception $exception) {
             \error_log('caught exception while trying to assemble NotificationFilter: ' . $exception->getMessage());
             return null;
         }
-
     }
 
     /**
