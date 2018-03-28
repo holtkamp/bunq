@@ -9,17 +9,13 @@ use Ramsey\Uuid\Uuid;
 final class RequestIdMiddleware
 {
     private $sessionToken;
+
     public function __construct($sessionToken)
     {
         $this->sessionToken = $sessionToken;
     }
 
-    /**
-     * @param RequestInterface $request
-     * @param array $options
-     * @return Request
-     */
-    public function __invoke(RequestInterface $request, array $options = [])
+    public function __invoke(RequestInterface $request, array $options = []): Request
     {
         $requestId = Uuid::uuid4()->toString();
         if (isset($options['request-id'])) {
@@ -34,7 +30,7 @@ final class RequestIdMiddleware
         $headers['X-Bunq-Region'][] = 'en_US';
 
         // Use the session token if not overridden with installation token
-        if (!isset($headers['X-Bunq-Client-Authentication'])) {
+        if (\is_string($this->sessionToken) && $this->sessionToken !== '' && !isset($headers['X-Bunq-Client-Authentication'])) {
             $headers['X-Bunq-Client-Authentication'] = $this->sessionToken;
         }
 
