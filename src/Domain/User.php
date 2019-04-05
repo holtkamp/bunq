@@ -47,6 +47,7 @@ abstract class User
     private $updated;
 
     /**
+     * TODO: consider renaming to "aliases"?
      * @var Alias[]
      */
     private $alias;
