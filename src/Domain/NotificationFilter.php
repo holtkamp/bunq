@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Link0\Bunq\Domain;
 
@@ -61,26 +61,17 @@ final class NotificationFilter
      */
     private $category;
 
-    /**
-     * @param string $deliveryMethod
-     * @param string $target
-     * @param string $category
-     */
     private function __construct(string $deliveryMethod, string $target, string $category)
     {
         $this->guardDeliveryMethod($deliveryMethod);
         $this->guardCategory($category);
 
         $this->deliveryMethod = $deliveryMethod;
-        $this->target = $target;
-        $this->category = $category;
+        $this->target         = $target;
+        $this->category       = $category;
     }
 
-    /**
-     * @param array $notificationFilterStruct
-     * @return NotificationFilter|null
-     */
-    public static function fromArray(array $notificationFilterStruct): ?NotificationFilter
+    public static function fromArray(array $notificationFilterStruct): ?self
     {
         // Target is optional (required for callback, not push)
         $notificationTarget = '';
@@ -96,14 +87,12 @@ final class NotificationFilter
             );
         } catch (\Exception $exception) {
             \error_log('caught exception while trying to assemble NotificationFilter: ' . $exception->getMessage());
-            return null;
         }
+
+        return null;
     }
 
-    /**
-     * @return array
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'notification_delivery_method' => $this->deliveryMethod(),
@@ -112,34 +101,24 @@ final class NotificationFilter
         ];
     }
 
-    /**
-     * @param string $category
-     * @return NotificationFilter
-     */
-    public static function createPush(string $category)
+    public static function createPush(string $category): self
     {
         return new self(self::DELIVERYMETHOD_PUSH, '', $category);
     }
 
-    /**
-     * @param string $callbackUrl
-     * @param string $category
-     * @return NotificationFilter
-     */
-    public static function createCallback(string $callbackUrl, string $category)
+    public static function createCallback(string $callbackUrl, string $category): self
     {
         return new self(self::DELIVERYMETHOD_CALLBACK, $callbackUrl, $category);
     }
 
     /**
-     * @return void
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     private function guardCategory($category)
     {
         $reflectionClass = new \ReflectionClass(__CLASS__);
         if (!array_key_exists('CATEGORY_' . $category, $reflectionClass->getConstants())) {
-            throw new \Exception("Invalid NotificationFilter->category '{$category}'");
+            throw new \InvalidArgumentException(sprintf('Invalid NotificationFilter->category "%s"', $category));
         }
     }
 
@@ -158,9 +137,6 @@ final class NotificationFilter
         }
     }
 
-    /**
-     * @return string
-     */
     public function deliveryMethod(): string
     {
         return $this->deliveryMethod;
@@ -174,9 +150,6 @@ final class NotificationFilter
         return $this->deliveryMethod;
     }
 
-    /**
-     * @return string
-     */
     public function category(): string
     {
         return $this->category;

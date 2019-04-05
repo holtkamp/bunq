@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Link0\Bunq\Domain;
 
@@ -96,31 +96,33 @@ abstract class User
      */
     private $notificationFilters;
 
-    /**
-     * @param array $user
-     */
     protected function __construct(array $user)
     {
-        $this->id = Id::fromInteger(intval($user['id']));
-        $this->status = $user['status'];
+        $this->id        = Id::fromInteger((int)$user['id']);
+        $this->status    = $user['status'];
         $this->subStatus = $user['sub_status'];
 
-        $timezone = new DateTimeZone('UTC');
+        $timezone      = new DateTimeZone('UTC');
         $this->created = new \DateTimeImmutable($user['created'], $timezone);
         $this->updated = new \DateTimeImmutable($user['updated'], $timezone);
 
-        $this->alias = array_map(function ($alias) {
-            return Alias::fromArray($alias);
-        }, $user['alias']);
+        $this->alias = array_filter(
+            array_map(
+                function ($alias): ?Alias {
+                    return Alias::fromArray($alias);
+                },
+                $user['alias']
+            )
+        );
 
-        $this->publicUuid = $user['public_uuid'];
-        $this->nickname = $user['public_nick_name'];
-        $this->displayName = $user['display_name'];
-        $this->language = $user['language'];
-        $this->region = $user['region'];
-        $this->sessionTimeout = intval($user['session_timeout']);
+        $this->publicUuid     = $user['public_uuid'];
+        $this->nickname       = $user['public_nick_name'];
+        $this->displayName    = $user['display_name'];
+        $this->language       = $user['language'];
+        $this->region         = $user['region'];
+        $this->sessionTimeout = (int)$user['session_timeout'];
 
-        $this->mainAddress = Address::fromArray($user['address_main']);
+        $this->mainAddress   = Address::fromArray($user['address_main']);
         $this->postalAddress = Address::fromArray($user['address_postal']);
 
         $this->notificationFilters = array_filter(
@@ -133,41 +135,26 @@ abstract class User
         );
     }
 
-    /**
-     * @return Id
-     */
     public function id(): Id
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function status(): string
     {
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
     public function subStatus(): string
     {
         return $this->subStatus;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function created(): DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function updated(): DateTimeInterface
     {
         return $this->updated;
@@ -181,49 +168,31 @@ abstract class User
         return $this->alias;
     }
 
-    /**
-     * @return string
-     */
     public function publicUuid(): string
     {
         return $this->publicUuid;
     }
 
-    /**
-     * @return string
-     */
     public function nickname(): string
     {
         return $this->nickname;
     }
 
-    /**
-     * @return string
-     */
     public function displayName(): string
     {
         return $this->displayName;
     }
 
-    /**
-     * @return string
-     */
     public function language(): string
     {
         return $this->language;
     }
 
-    /**
-     * @return string
-     */
     public function region(): string
     {
         return $this->region;
     }
 
-    /**
-     * @return int
-     */
     public function sessionTimeout(): int
     {
         return $this->sessionTimeout;
