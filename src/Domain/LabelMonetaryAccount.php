@@ -5,7 +5,7 @@ namespace Link0\Bunq\Domain;
 final class LabelMonetaryAccount
 {
     /**
-     * @var string
+     * @var ?string
      */
     private $iban;
 
@@ -26,17 +26,13 @@ final class LabelMonetaryAccount
 
     /**
      * @param array $labelMonetaryAccount
-     * @return LabelMonetaryAccount
      */
     public static function fromArray(array $labelMonetaryAccount): LabelMonetaryAccount
     {
         return new self($labelMonetaryAccount);
     }
 
-    /**
-     * @return string
-     */
-    public function iban(): string
+    public function iban(): ?string
     {
         return $this->iban;
     }
