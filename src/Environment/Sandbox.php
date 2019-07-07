@@ -6,7 +6,7 @@ use Link0\Bunq\Environment;
 
 final class Sandbox implements Environment
 {
-    const SERVICE_URL = 'https://sandbox.public.api.bunq.com';
+    const SERVICE_URL = 'https://public-api.sandbox.bunq.com';
     const VERSION = 'v1';
 
     /**
