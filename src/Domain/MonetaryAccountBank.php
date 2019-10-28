@@ -102,8 +102,9 @@ final class MonetaryAccountBank
         $this->dailySpent = new Money($monetaryBankAccount['daily_spent']['value'] * 100, $this->currency);
 
         if (\array_key_exists('notification_filters', $monetaryBankAccount) && is_array($monetaryBankAccount['notification_filters'])) {
-            foreach ($monetaryBankAccount['notification_filters'] as $notificationFilter) {
-                if ($notificationFilter = NotificationFilter::fromArray($notificationFilter)) {
+            foreach ($monetaryBankAccount['notification_filters'] as $notificationFilterStruct) {
+                \assert(\is_array($notificationFilterStruct));
+                if ($notificationFilter = NotificationFilter::fromArray($notificationFilterStruct)) {
                     $this->notificationFilters[] = $notificationFilter;
                 }
             }
