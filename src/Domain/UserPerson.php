@@ -6,9 +6,8 @@ final class UserPerson extends User
 {
     /**
      * @param array $userPerson
-     * @return UserPerson
      */
-    public static function fromArray(array $userPerson)
+    public static function fromArray(array $userPerson) : self
     {
         return new self($userPerson);
     }

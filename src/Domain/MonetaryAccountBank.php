@@ -108,40 +108,27 @@ final class MonetaryAccountBank
 
     /**
      * @param array $monetaryBankAccount
-     * @return MonetaryAccountBank
      */
-    public static function fromArray(array $monetaryBankAccount)
+    public static function fromArray(array $monetaryBankAccount) : self
     {
         return new self($monetaryBankAccount);
     }
 
-    /**
-     * @return Id
-     */
     public function id(): Id
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function description(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function created(): DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function updated(): DateTimeInterface
     {
         return $this->updated;
@@ -155,17 +142,11 @@ final class MonetaryAccountBank
         return $this->alias;
     }
 
-    /**
-     * @return Money
-     */
     public function balance(): Money
     {
         return $this->balance;
     }
 
-    /**
-     * @return Id
-     */
     public function userId(): Id
     {
         return $this->userId;

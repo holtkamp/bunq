@@ -40,9 +40,8 @@ final class DeviceServer
 
     /**
      * @param array $structure
-     * @return DeviceServer
      */
-    public static function fromArray(array $structure)
+    public static function fromArray(array $structure) : self
     {
         $timezone = new DateTimeZone('UTC');
 
@@ -53,52 +52,35 @@ final class DeviceServer
         $deviceServer->ip = $structure['ip'];
         $deviceServer->description = $structure['description'];
         $deviceServer->status = $structure['status'];
+
         return $deviceServer;
     }
 
-    /**
-     * @return int
-     */
     public function id(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function created(): DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function updated(): DateTimeInterface
     {
         return $this->updated;
     }
 
-    /**
-     * @return string
-     */
     public function ip(): string
     {
         return $this->ip;
     }
 
-    /**
-     * @return string
-     */
     public function description(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function status(): string
     {
         return $this->status;

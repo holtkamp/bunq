@@ -11,9 +11,6 @@ final class PublicKey
      */
     private $key;
 
-    /**
-     * @param string $publicKey
-     */
     public function __construct(string $publicKey)
     {
         if (!preg_match('/^\-\-\-\-\-BEGIN PUBLIC KEY\-\-\-\-\-[\S\n]+\-\-\-\-\-END PUBLIC KEY\-\-\-\-\-$/', $publicKey)) {
@@ -25,9 +22,8 @@ final class PublicKey
 
     /**
      * @param array $serverPublicKey
-     * @return PublicKey
      */
-    public static function fromServerPublicKey(array $serverPublicKey)
+    public static function fromServerPublicKey(array $serverPublicKey) : self
     {
         return new self($serverPublicKey['server_public_key']);
     }

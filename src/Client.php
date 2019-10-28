@@ -91,12 +91,9 @@ final class Client
     }
 
     /**
-     * @param string $endpoint
      * @param array $headers
-     *
-     * @return void
      */
-    public function delete(string $endpoint, array $headers = [])
+    public function delete(string $endpoint, array $headers = []) : void
     {
         $this->guzzle->request('DELETE', $endpoint, [
             'headers' => $headers,
@@ -152,12 +149,7 @@ final class Client
         }
     }
 
-    /**
-     * @param string $sessionToken
-     *
-     * @return void
-     */
-    private function addRequestIdMiddleware(string $sessionToken)
+    private function addRequestIdMiddleware(string $sessionToken) : void
     {
         $this->handlerStack->push(
             Middleware::mapRequest(new RequestIdMiddleware($sessionToken)),
@@ -165,12 +157,7 @@ final class Client
         );
     }
 
-    /**
-     * @param Keypair $keypair
-     *
-     * @return void
-     */
-    private function addRequestSignatureMiddleware(Keypair $keypair)
+    private function addRequestSignatureMiddleware(Keypair $keypair) : void
     {
         // TODO: Figure out if we can skip this middleware on POST /installation
         $this->handlerStack->push(
@@ -179,12 +166,7 @@ final class Client
         );
     }
 
-    /**
-     * @param PublicKey|null $serverPublicKey
-     *
-     * @return void
-     */
-    private function addServerResponseMiddleware(PublicKey $serverPublicKey = null)
+    private function addServerResponseMiddleware(PublicKey $serverPublicKey = null) : void
     {
         // If we have obtained the server's public key, we can verify responses
         if ($serverPublicKey instanceof PublicKey) {
@@ -194,12 +176,7 @@ final class Client
         }
     }
 
-    /**
-     * @param Environment $environment
-     *
-     * @return void
-     */
-    private function addDebugMiddleware(Environment $environment)
+    private function addDebugMiddleware(Environment $environment) : void
     {
         if ($environment->inDebugMode()) {
             $this->handlerStack->push(DebugMiddleware::tap(), 'debug_tap');

@@ -11,9 +11,6 @@ final class PrivateKey
      */
     private $key;
 
-    /**
-     * @param string $privateKey
-     */
     public function __construct(string $privateKey)
     {
         if (!preg_match('/^\-\-\-\-\-BEGIN PRIVATE KEY\-\-\-\-\-[\S\n]+\-\-\-\-\-END PRIVATE KEY\-\-\-\-\-$/', $privateKey)) {

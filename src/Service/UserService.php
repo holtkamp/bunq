@@ -13,9 +13,6 @@ final class UserService
      */
     private $client;
 
-    /**
-     * @param Client $client
-     */
     public function __construct(Client $client)
     {
         $this->client = $client;
@@ -29,10 +26,6 @@ final class UserService
         return $this->client->get('user');
     }
 
-    /**
-     * @param Id $userId
-     * @return User
-     */
     public function userById(Id $userId): User
     {
         return $this->client->get('user/' . $userId)[0];

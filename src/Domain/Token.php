@@ -43,41 +43,26 @@ final class Token
         return $t;
     }
 
-    /**
-     * @return Id
-     */
     public function id(): Id
     {
         return $this->id;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function created(): DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function updated(): DateTimeInterface
     {
         return $this->updated;
     }
 
-    /**
-     * @return string
-     */
     public function token(): string
     {
         return $this->token;
     }
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return $this->token();

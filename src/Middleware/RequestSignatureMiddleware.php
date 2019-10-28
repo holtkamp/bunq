@@ -15,17 +15,12 @@ final class RequestSignatureMiddleware
      */
     private $privateKey;
 
-    /**
-     * @param PrivateKey $privateKey
-     */
     public function __construct(PrivateKey $privateKey)
     {
         $this->privateKey = $privateKey;
     }
 
     /**
-     * @param string $data
-     * @return string
      * @throws \Exception
      */
     public function sign(string $data): string
@@ -36,12 +31,9 @@ final class RequestSignatureMiddleware
         return $signature;
     }
     /**
-     * @param RequestInterface $request
      * @param array            $options
-     *
-     * @return Request
      */
-    public function __invoke(RequestInterface $request, array $options = [])
+    public function __invoke(RequestInterface $request, array $options = []) : Request
     {
         $headers = $request->getHeaders();
         ksort($headers);

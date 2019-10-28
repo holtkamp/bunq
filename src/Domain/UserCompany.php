@@ -6,9 +6,8 @@ final class UserCompany extends User
 {
     /**
      * @param array $userCompany
-     * @return UserCompany
      */
-    public static function fromArray(array $userCompany)
+    public static function fromArray(array $userCompany) : self
     {
         return new self($userCompany);
     }

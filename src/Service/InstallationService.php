@@ -76,7 +76,6 @@ final class InstallationService
     }
 
     /**
-     * @param Installation $installation
      * @return DeviceServer[]
      */
     public function listDeviceServers(Installation $installation): array
@@ -95,7 +94,6 @@ final class InstallationService
     }
 
     /**
-     * @param Id $installationId
      * @return Installation[]
      */
     public function installationById(Id $installationId)
@@ -104,7 +102,6 @@ final class InstallationService
     }
 
     /**
-     * @param Installation $installation
      * @return array
      */
     public function serverPublicKey(Installation $installation)

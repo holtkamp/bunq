@@ -14,20 +14,15 @@ final class ResponseSignatureMiddleware
      */
     private $publicKey;
 
-    /**
-     * @param PublicKey $serverPublicKey
-     */
     public function __construct(PublicKey $serverPublicKey)
     {
         $this->publicKey = $serverPublicKey;
     }
 
     /**
-     * @param ResponseInterface $response
-     * @return ResponseInterface
      * @throws \Exception
      */
-    public function __invoke(ResponseInterface $response)
+    public function __invoke(ResponseInterface $response) : ResponseInterface
     {
         $header = $response->getHeader('X-Bunq-Server-Signature');
 

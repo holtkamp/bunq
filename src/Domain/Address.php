@@ -34,14 +34,6 @@ final class Address
      */
     private $province;
 
-    /**
-     * @param string $street
-     * @param string $houseNumber
-     * @param string $postalCode
-     * @param string $city
-     * @param string $country
-     * @param string $province
-     */
     public function __construct(
         string $street,
         string $houseNumber,
@@ -60,11 +52,10 @@ final class Address
 
     /**
      * @param array $address
-     * @return Address
      */
-    public static function fromArray(array $address): Address
+    public static function fromArray(array $address): self
     {
-        return new Address(
+        return new self(
             $address['street'],
             $address['house_number'],
             $address['postal_code'],
@@ -74,10 +65,7 @@ final class Address
         );
     }
 
-    /**
-     * @return array
-     */
-    public function toArray()
+    public function toArray() : array
     {
         return [
             'street' => $this->street(),
@@ -89,49 +77,31 @@ final class Address
         ];
     }
 
-    /**
-     * @return string
-     */
     public function street(): string
     {
         return $this->street;
     }
 
-    /**
-     * @return string
-     */
     public function houseNumber(): string
     {
         return $this->houseNumber;
     }
 
-    /**
-     * @return string
-     */
     public function postalCode(): string
     {
         return $this->postalCode;
     }
 
-    /**
-     * @return string
-     */
     public function city(): string
     {
         return $this->city;
     }
 
-    /**
-     * @return string
-     */
     public function country(): string
     {
         return $this->country;
     }
 
-    /**
-     * @return string
-     */
     public function province(): string
     {
         return $this->province;

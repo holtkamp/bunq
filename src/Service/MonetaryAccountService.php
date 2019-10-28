@@ -25,17 +25,12 @@ final class MonetaryAccountService
         $this->client = $client;
     }
 
-    /**
-     * @param Id $id
-     * @return MonetaryAccountBank
-     */
     public function byUserAndId(User $user, Id $id): MonetaryAccountBank
     {
         return $this->client->get('user/' . $user->id() . '/monetary-account/' . $id)[0];
     }
 
     /**
-     * @param User $user
      * @return MonetaryAccountBank[]
      */
     public function listByUser(User $user)
@@ -43,18 +38,14 @@ final class MonetaryAccountService
         return $this->client->get('user/' . $user->id() . '/monetary-account');
     }
 
-    /**
-     * @param MonetaryAccountBank $monetaryAccount
-     * @return void
-     */
-    public function changeDescription(MonetaryAccountBank $monetaryAccount, string $description)
+    public function changeDescription(MonetaryAccountBank $monetaryAccount, string $description) : void
     {
         $this->updateMonetaryAccount($monetaryAccount, [
             'description' => $description,
         ]);
     }
 
-    public function changeDailyLimit(MonetaryAccountBank $monetaryAccount, Money $dailyLimit)
+    public function changeDailyLimit(MonetaryAccountBank $monetaryAccount, Money $dailyLimit) : void
     {
         $this->updateMonetaryAccount($monetaryAccount, [
             'daily_limit' => [
@@ -64,11 +55,7 @@ final class MonetaryAccountService
         ]);
     }
 
-    /**
-     * @param MonetaryAccountBank $monetaryAccountBank
-     * @return void
-     */
-    public function closeAccount(MonetaryAccountBank $monetaryAccountBank, string $reason = '')
+    public function closeAccount(MonetaryAccountBank $monetaryAccountBank, string $reason = '') : void
     {
         $fields = [
             'status' => MonetaryAccountBank::STATUS_CANCELLED,
@@ -83,7 +70,7 @@ final class MonetaryAccountService
         $this->updateMonetaryAccount($monetaryAccountBank, $fields);
     }
 
-    public function reopenAccount(MonetaryAccountBank $monetaryAccountBank)
+    public function reopenAccount(MonetaryAccountBank $monetaryAccountBank) : void
     {
         $this->updateMonetaryAccount($monetaryAccountBank, [
             'status' => MonetaryAccountBank::STATUS_PENDING_REOPEN,
@@ -91,12 +78,7 @@ final class MonetaryAccountService
         ]);
     }
 
-    /**
-     * @param MonetaryAccountBank $monetaryAccountBank
-     * @param NotificationFilter $notificationFilter
-     * @return void
-     */
-    public function addNotificationFilter(MonetaryAccountBank $monetaryAccountBank, NotificationFilter $notificationFilter)
+    public function addNotificationFilter(MonetaryAccountBank $monetaryAccountBank, NotificationFilter $notificationFilter) : void
     {
         $notificationFilters = $monetaryAccountBank->notificationFilters();
         $notificationFilters[] = $notificationFilter;
@@ -104,12 +86,7 @@ final class MonetaryAccountService
         $this->updateNotificationFilters($monetaryAccountBank, $notificationFilters);
     }
 
-    /**
-     * @param MonetaryAccountBank $monetaryAccountBank
-     * @param NotificationFilter $notificationFilter
-     * @return void
-     */
-    public function removeNotificationFilter(MonetaryAccountBank $monetaryAccountBank, NotificationFilter $notificationFilter)
+    public function removeNotificationFilter(MonetaryAccountBank $monetaryAccountBank, NotificationFilter $notificationFilter) : void
     {
         $notificationFilters = $monetaryAccountBank->notificationFilters();
         foreach ($notificationFilters as $key => $value) {
@@ -122,18 +99,17 @@ final class MonetaryAccountService
         $this->updateNotificationFilters($monetaryAccountBank, $notificationFilters);
     }
 
-    private function updateMonetaryAccount(MonetaryAccountBank $monetaryAccountBank, array $newFields)
+    private function updateMonetaryAccount(MonetaryAccountBank $monetaryAccountBank, array $newFields) : array
     {
         $endpoint = 'user/' . $monetaryAccountBank->userId() . '/monetary-account-bank/' . $monetaryAccountBank->id();
         return $this->client->put($endpoint, $newFields);
     }
 
     /**
-     * @param MonetaryAccountBank $monetaryAccountBank
-     * @param $notificationFilters
+     * @param NotificationFilter[] $notificationFilters
      * @return void
      */
-    private function updateNotificationFilters(MonetaryAccountBank $monetaryAccountBank, $notificationFilters)
+    private function updateNotificationFilters(MonetaryAccountBank $monetaryAccountBank, array $notificationFilters) : void
     {
         $this->updateMonetaryAccount($monetaryAccountBank, [
             'notification_filters' => array_map(function (NotificationFilter $notificationFilter) {

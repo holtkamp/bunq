@@ -51,12 +51,7 @@ final class PaymentService
     /**
      * This method performs a payment and returns a payment Id
      *
-     * @param Money $money
-     * @param Alias $alias
-     * @param string $description
      * @param Id[] $attachments,
-     * @param string $merchantReference
-     * @return Id
      */
     public function pay(
         Money $money,

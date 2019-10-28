@@ -124,10 +124,9 @@ final class NotificationFilter
 
     /**
      * @param $deliveryMethod
-     * @return void
      * @throws \Exception
      */
-    private function guardDeliveryMethod($deliveryMethod)
+    private function guardDeliveryMethod($deliveryMethod) : void
     {
         if (!in_array($deliveryMethod, [
             self::DELIVERYMETHOD_PUSH,
@@ -142,9 +141,6 @@ final class NotificationFilter
         return $this->deliveryMethod;
     }
 
-    /**
-     * @return string
-     */
     public function target(): string
     {
         return $this->deliveryMethod;

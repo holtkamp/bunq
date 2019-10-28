@@ -18,9 +18,6 @@ final class CertificatePinnedService
      */
     private $userId;
 
-    /**
-     * @param Client $client
-     */
     public function __construct(Client $client, Id $userId)
     {
         $this->client = $client;
@@ -35,10 +32,6 @@ final class CertificatePinnedService
         return $this->client->get('user/' . $this->userId . '/certificate-pinned');
     }
 
-    /**
-     * @param Certificate $certificate
-     * @return Id
-     */
     public function add(Certificate $certificate): Id
     {
         return $this->client->post(
@@ -51,10 +44,6 @@ final class CertificatePinnedService
         )[0];
     }
 
-    /**
-     * @param Id $certificateId
-     * @return Certificate
-     */
     public function get(Id $certificateId): Certificate
     {
         return $this->client->get(
@@ -62,11 +51,7 @@ final class CertificatePinnedService
         )[0];
     }
 
-    /**
-     * @param Id $certificateId
-     * @return void
-     */
-    public function remove(Id $certificateId)
+    public function remove(Id $certificateId) : void
     {
         $this->client->delete('user/' . $this->userId . '/certificate-pinned/' . $certificateId);
     }

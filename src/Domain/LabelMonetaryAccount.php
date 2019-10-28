@@ -15,7 +15,6 @@ final class LabelMonetaryAccount
     private $displayName;
 
     /**
-     * LabelMonetaryAccount constructor.
      * @param array $labelMonetaryAccount
      */
     private function __construct(array $labelMonetaryAccount)
@@ -36,10 +35,7 @@ final class LabelMonetaryAccount
     {
         return $this->iban;
     }
-
-    /**
-     * @return string
-     */
+    
     public function displayName(): string
     {
         return $this->displayName;

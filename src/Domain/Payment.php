@@ -74,65 +74,41 @@ final class Payment
         return $payment;
     }
 
-    /**
-     * @return Id
-     */
     public function id(): Id
     {
         return $this->id;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function created(): DateTimeInterface
     {
         return $this->created;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function updated(): DateTimeInterface
     {
         return $this->updated;
     }
 
-    /**
-     * @return Money
-     */
     public function amount(): Money
     {
         return $this->amount;
     }
 
-    /**
-     * @return string
-     */
     public function description(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function type(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return LabelMonetaryAccount
-     */
     public function alias(): LabelMonetaryAccount
     {
         return $this->alias;
     }
 
-    /**
-     * @return LabelMonetaryAccount
-     */
     public function counterpartyAlias(): LabelMonetaryAccount
     {
         return $this->counterpartyAlias;

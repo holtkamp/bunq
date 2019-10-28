@@ -11,19 +11,12 @@ final class Id
      */
     private $id;
 
-    /**
-     * @param int $id
-     */
     private function __construct(int $id)
     {
         Assertion::greaterOrEqualThan($id, 0, 'Id must be greater or equal to 0');
         $this->id = $id;
     }
 
-    /**
-     * @param int $id
-     * @return Id
-     */
     public static function fromInteger(int $id): Id
     {
         return new Id($id);
