@@ -46,7 +46,7 @@ final class MonetaryAccountBank
     /**
      * @var Alias[]
      */
-    private $alias;
+    private $alias = [];
 
     /**
      * @var Currency
@@ -71,7 +71,7 @@ final class MonetaryAccountBank
     /**
      * @var NotificationFilter[]
      */
-    private $notificationFilters;
+    private $notificationFilters = [];
 
     /**
      * Private constructor
@@ -86,12 +86,14 @@ final class MonetaryAccountBank
         $this->updated = new DateTimeImmutable($monetaryBankAccount['updated'], $timezone);
         $this->userId = Id::fromInteger($monetaryBankAccount['user_id']);
 
-        foreach ($monetaryBankAccount['alias'] as $aliasInfo) {
-            $this->alias[] = new Alias(
-                $aliasInfo['type'],
-                $aliasInfo['value'],
-                $aliasInfo['name']
-            );
+        if (\array_key_exists('alias', $monetaryBankAccount) && is_array($monetaryBankAccount['alias'])) {
+            foreach ($monetaryBankAccount['alias'] as $aliasInfo) {
+                $this->alias[] = new Alias(
+                    $aliasInfo['type'],
+                    $aliasInfo['value'],
+                    $aliasInfo['name']
+                );
+            }
         }
 
         $this->currency = new Currency($monetaryBankAccount['balance']['currency']);
@@ -99,9 +101,11 @@ final class MonetaryAccountBank
         $this->dailyLimit = new Money($monetaryBankAccount['daily_limit']['value'] * 100, $this->currency);
         $this->dailySpent = new Money($monetaryBankAccount['daily_spent']['value'] * 100, $this->currency);
 
-        foreach ($monetaryBankAccount['notification_filters'] as $notificationFilter) {
-            if ($notificationFilter = NotificationFilter::fromArray($notificationFilter)) {
-                $this->notificationFilters[] = $notificationFilter;
+        if (\array_key_exists('notification_filters', $monetaryBankAccount) && is_array($monetaryBankAccount['notification_filters'])) {
+            foreach ($monetaryBankAccount['notification_filters'] as $notificationFilter) {
+                if ($notificationFilter = NotificationFilter::fromArray($notificationFilter)) {
+                    $this->notificationFilters[] = $notificationFilter;
+                }
             }
         }
     }
@@ -155,7 +159,7 @@ final class MonetaryAccountBank
     /**
      * @return NotificationFilter[]
      */
-    public function notificationFilters()
+    public function notificationFilters() : array
     {
         return $this->notificationFilters;
     }
