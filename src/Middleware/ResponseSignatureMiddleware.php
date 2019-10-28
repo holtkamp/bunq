@@ -9,6 +9,8 @@ final class ResponseSignatureMiddleware
 {
     const SIGNATURE_ALGORITHM = OPENSSL_ALGO_SHA256;
 
+    private const HEADER_PREFIX = 'X-Bunq-';
+
     /**
      * @var PublicKey
      */
@@ -41,7 +43,7 @@ final class ResponseSignatureMiddleware
                 }
 
                 // Skip all headers that are not X-Bunq-
-                if (substr($header, 0, 7) !== 'X-Bunq-') {
+                if (strpos((string)$header, self::HEADER_PREFIX) !== 0) {
                     continue;
                 }
 
@@ -52,12 +54,16 @@ final class ResponseSignatureMiddleware
             }
 
             $signatureData .= "\n\n";
-            $signatureData .= (string) $response->getBody();
+            $signatureData .= (string)$response->getBody();
 
             $rawSignature = base64_decode($serverSignature);
-            $verify = openssl_verify($signatureData, $rawSignature, $this->publicKey, self::SIGNATURE_ALGORITHM);
+            if (!\is_string($rawSignature)) {
+                throw new \Exception('Failed base64 decoding server signature');
+            }
+
+            $verify = openssl_verify($signatureData, $rawSignature, (string)$this->publicKey, self::SIGNATURE_ALGORITHM);
             if ($verify !== 1) {
-                throw new \Exception("Server signature does not match response");
+                throw new \Exception('Server signature does not match response');
             }
         }
 

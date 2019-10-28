@@ -20,18 +20,12 @@ final class PrivateKey
         $this->key = $privateKey;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString() : string
     {
         return $this->key;
     }
 
-    /**
-     * @return array
-     */
-    public function __debugInfo()
+    public function __debugInfo() : array
     {
         // Hide the actual key from backtraces
         return ['key' => '***PRIVATE KEY***'];

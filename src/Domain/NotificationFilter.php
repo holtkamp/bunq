@@ -123,15 +123,15 @@ final class NotificationFilter
     }
 
     /**
-     * @param $deliveryMethod
      * @throws \Exception
      */
-    private function guardDeliveryMethod($deliveryMethod) : void
+    private function guardDeliveryMethod(string $deliveryMethod): void
     {
-        if (!in_array($deliveryMethod, [
+        $deliveryMethods = [
             self::DELIVERYMETHOD_PUSH,
-            self::DELIVERYMETHOD_CALLBACK,
-        ])) {
+            self::DELIVERYMETHOD_CALLBACK
+        ];
+        if (!in_array($deliveryMethod, $deliveryMethods, true)) {
             throw new \Exception("Invalid NotificationFilter->deliveryMethod '{$deliveryMethod}'");
         }
     }

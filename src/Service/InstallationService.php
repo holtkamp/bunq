@@ -56,8 +56,6 @@ final class InstallationService
     }
 
     /**
-     * @param $token
-     * @param string $apiKey
      * @return array
      *
      * Array(
@@ -66,7 +64,7 @@ final class InstallationService
      *   'UserCompany' => ...
      * )
      */
-    public function createSessionServer($token, string $apiKey): array
+    public function createSessionServer(string $token, string $apiKey): array
     {
         $body = ['secret' => $apiKey];
 

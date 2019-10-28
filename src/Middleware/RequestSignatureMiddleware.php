@@ -10,6 +10,8 @@ final class RequestSignatureMiddleware
 {
     const SIGNATURE_ALGORITHM = OPENSSL_ALGO_SHA256;
 
+    private const HEADER_PREFIX = 'X-Bunq-';
+
     /**
      * @var PrivateKey
      */
@@ -25,7 +27,7 @@ final class RequestSignatureMiddleware
      */
     public function sign(string $data): string
     {
-        if (openssl_sign($data, $signature, $this->privateKey, static::SIGNATURE_ALGORITHM) !== true) {
+        if (openssl_sign($data, $signature, (string) $this->privateKey, static::SIGNATURE_ALGORITHM) !== true) {
             throw new \Exception("Could not sign request: " . openssl_error_string());
         }
         return $signature;
@@ -43,7 +45,7 @@ final class RequestSignatureMiddleware
             foreach ($values as $value) {
                 if ($header === 'User-Agent'
                     || $header === 'Cache-Control'
-                    || substr($header, 0, 7) === 'X-Bunq-') {
+                    || strpos((string)$header, self::HEADER_PREFIX) === 0) {
                     $signatureData .= PHP_EOL . $header . ': ' . $value;
                 }
             }
