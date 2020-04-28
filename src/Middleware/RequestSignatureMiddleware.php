@@ -10,8 +10,6 @@ final class RequestSignatureMiddleware
 {
     const SIGNATURE_ALGORITHM = OPENSSL_ALGO_SHA256;
 
-    private const HEADER_PREFIX = 'X-Bunq-';
-
     /**
      * @var PrivateKey
      */
@@ -32,8 +30,9 @@ final class RequestSignatureMiddleware
         }
         return $signature;
     }
+
     /**
-     * @param array            $options
+     * @param array $options
      */
     public function __invoke(RequestInterface $request, array $options = []) : Request
     {
