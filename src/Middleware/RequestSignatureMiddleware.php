@@ -40,23 +40,7 @@ final class RequestSignatureMiddleware
         $headers = $request->getHeaders();
         ksort($headers);
 
-        $signatureData = $request->getMethod() . ' ' . $request->getRequestTarget();
-        foreach ($headers as $header => $values) {
-            foreach ($values as $value) {
-                if ($header === 'User-Agent'
-                    || $header === 'Cache-Control'
-                    || strpos((string)$header, self::HEADER_PREFIX) === 0) {
-                    $signatureData .= PHP_EOL . $header . ': ' . $value;
-                }
-            }
-        }
-        $signatureData .= "\n\n";
-
-        $body = (string) $request->getBody();
-        if (!empty($body)) {
-            $signatureData .= $body;
-        }
-
+        $signatureData = (string) $request->getBody();
         $signature = $this->sign($signatureData);
 
         $headers['X-Bunq-Client-Signature'] = base64_encode($signature);
